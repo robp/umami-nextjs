@@ -7,8 +7,12 @@ body {
 }
 
 a {
-  color: inherit;
+  color: blue;
   text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 * {
