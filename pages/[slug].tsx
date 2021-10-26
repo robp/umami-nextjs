@@ -1,15 +1,16 @@
 import { GetStaticProps, GetStaticPaths } from "next"
-import Head from "next/head"
 import Layout from "@/components/layout"
-import Date from "@/components/date"
-import PageType from "@/types/page"
+import Head from "next/head"
 
-import { getAllPostIds, getPostData } from "@/lib/posts"
+import { getAllPageSlugs, getPageBySlug } from "@/lib/api"
 
 import utilStyles from "@/styles/utils.module.scss"
 
 type Props = {
-  postData: PageType
+  postData: {
+    title: string
+    body: string
+  }
 }
 
 export default function Post({ postData }: Props) {
@@ -20,18 +21,15 @@ export default function Post({ postData }: Props) {
       </Head>{" "}
       <article>
         <h1 className={utilStyles.headingXl}>{postData.title}</h1>
-        <div className={utilStyles.lightText}>
-          <Date dateString={postData.date} />
-        </div>
-        <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+        <div dangerouslySetInnerHTML={{ __html: postData.body }} />
       </article>
     </Layout>
   )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Return a list of possible value for id
-  const paths = getAllPostIds()
+  // Return a list of possible values for `slug`
+  const paths = await getAllPageSlugs()
   return {
     paths,
     fallback: false,
@@ -39,8 +37,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  // Fetch necessary data for the blog post using params.id
-  const postData = await getPostData(params.id as string)
+  // Fetch necessary data for the article using `params.slug`
+  const postData = await getPageBySlug(params.slug as string)
   return {
     props: {
       postData,

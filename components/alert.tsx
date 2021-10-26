@@ -1,7 +1,12 @@
-import styles from "@/styles/alert.module.scss"
 import cn from "classnames"
+import styles from "@/styles/alert.module.scss"
 
-export default function Alert({ children, type }) {
+type Props = {
+  children: React.ReactNode
+  type: string
+}
+
+export default function Alert({ children, type }: Props) {
   return (
     <div
       className={cn({

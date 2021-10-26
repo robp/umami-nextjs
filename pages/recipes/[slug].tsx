@@ -2,14 +2,14 @@ import { GetStaticProps, GetStaticPaths } from "next"
 import Head from "next/head"
 import Layout from "@/components/layout"
 import Date from "@/components/date"
-import PageType from "@/types/page"
+import RecipeType from "@/types/recipe"
 
-import { getAllPostIds, getPostData } from "@/lib/posts"
+import { getAllRecipeSlugs, getRecipeBySlug } from "@/lib/api"
 
 import utilStyles from "@/styles/utils.module.scss"
 
 type Props = {
-  postData: PageType
+  postData: RecipeType
 }
 
 export default function Post({ postData }: Props) {
@@ -21,17 +21,17 @@ export default function Post({ postData }: Props) {
       <article>
         <h1 className={utilStyles.headingXl}>{postData.title}</h1>
         <div className={utilStyles.lightText}>
-          <Date dateString={postData.date} />
+          <Date dateString={postData.created_at} />
         </div>
-        <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+        <div dangerouslySetInnerHTML={{ __html: postData.summary }} />
       </article>
     </Layout>
   )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Return a list of possible value for id
-  const paths = getAllPostIds()
+  // Return a list of possible values for `slug`
+  const paths = await getAllRecipeSlugs()
   return {
     paths,
     fallback: false,
@@ -39,8 +39,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  // Fetch necessary data for the blog post using params.id
-  const postData = await getPostData(params.id as string)
+  // Fetch necessary data for the article using `params.slug`
+  const postData = await getRecipeBySlug(params.slug as string)
   return {
     props: {
       postData,
