@@ -1,11 +1,12 @@
 import { GetStaticProps, GetStaticPaths } from "next"
 import Head from "next/head"
-import Image from "next/image"
 import Layout from "@/components/layout"
-import Date from "@/components/date"
+import Image from "next/image"
+import MediaImage from "@/components/media-image"
 import RecipeType from "@/types/recipe"
 import RecipeCategoryType from "@/types/recipe-category"
 import TagType from "@/types/tag"
+import { getPlaiceholder } from "plaiceholder"
 
 import { getAllRecipeSlugs, getRecipeBySlug } from "@/lib/api"
 
@@ -14,9 +15,10 @@ import IngredientType from "@/types/ingredient"
 
 type Props = {
   recipe: RecipeType
+  media_image_props: any
 }
 
-export default function Recipe({ recipe }: Props) {
+export default function Recipe({ recipe, media_image_props }: Props) {
   return (
     <Layout>
       <Head>
@@ -34,10 +36,9 @@ export default function Recipe({ recipe }: Props) {
         <div dangerouslySetInnerHTML={{ __html: recipe.summary }} />
         <p>
           <Image
-            src={recipe.media_image.url}
+            priority={true}
             alt={recipe.media_image.alternativeText}
-            width={recipe.media_image.width}
-            height={recipe.media_image.height}
+            {...media_image_props}
           />
         </p>
         <div>
@@ -56,7 +57,9 @@ export default function Recipe({ recipe }: Props) {
         </div>
         <div>
           <h2>Recipe instruction</h2>
-          <div dangerouslySetInnerHTML={{ __html: recipe.recipe_instruction }} />
+          <div
+            dangerouslySetInnerHTML={{ __html: recipe.recipe_instruction }}
+          />
         </div>
       </article>
     </Layout>
@@ -75,9 +78,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   // Fetch necessary data for the article using `params.slug`
   const recipe = await getRecipeBySlug(params?.slug as string)
+  const { base64, img } = await getPlaiceholder(
+    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${recipe?.media_image.url}`
+  )
+
   return {
     props: {
       recipe,
+      media_image_props: {
+        ...img,
+        placeholder: "blur",
+        blurDataURL: base64,
+      }
     },
   }
 }

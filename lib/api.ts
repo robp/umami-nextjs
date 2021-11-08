@@ -125,6 +125,7 @@ export const getRecipeBySlug = async (slug: string) => {
           width
           height
           url
+          formats
         }
         number_of_servings
         preparation_time

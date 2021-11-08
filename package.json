@@ -13,11 +13,13 @@
     "date-fns": "^2.25.0",
     "gray-matter": "^4.0.3",
     "next": "11.1.2",
+    "plaiceholder": "^2.2.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "remark": "^13.0.0",
     "remark-html": "^13.0.2",
     "sass": "^1.43.2",
+    "sharp": "^0.29.2",
     "swr": "^1.0.1"
   },
   "devDependencies": {
