@@ -1,3 +1,6 @@
+import MediaImageType from "./media-image"
+import TagType from "./tag"
+
 type ArticleType = {
   id: string
   created_at: string
