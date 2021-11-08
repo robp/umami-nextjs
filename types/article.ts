@@ -3,6 +3,8 @@ type ArticleType = {
   created_at: string
   title: string
   body: string
+  media_image: MediaImageType
+  tags: [TagType]
   slug: string
 }
 

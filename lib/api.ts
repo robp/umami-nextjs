@@ -49,6 +49,22 @@ export const getArticleBySlug = async (slug: string) => {
         created_at
         title
         body
+        media_image {
+          id
+          name
+          alternativeText
+          caption
+          width
+          height
+          url
+          formats
+        }
+        tags {
+          id
+          name
+          description
+          slug
+        }
       }
     }
   `,

@@ -1,12 +1,12 @@
 import { GetStaticProps, GetStaticPaths } from "next"
+import { getPlaiceholder } from "plaiceholder"
 import Head from "next/head"
 import Layout from "@/components/layout"
 import Image from "next/image"
-import MediaImage from "@/components/media-image"
+// import MediaImage from "@/components/media-image"
 import RecipeType from "@/types/recipe"
 import RecipeCategoryType from "@/types/recipe-category"
 import TagType from "@/types/tag"
-import { getPlaiceholder } from "plaiceholder"
 
 import { getAllRecipeSlugs, getRecipeBySlug } from "@/lib/api"
 
