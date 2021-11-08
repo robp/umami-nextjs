@@ -9,21 +9,21 @@ import { getAllArticleSlugs, getArticleBySlug } from "@/lib/api"
 import utilStyles from "@/styles/utils.module.scss"
 
 type Props = {
-  postData: ArticleType
+  article: ArticleType
 }
 
-export default function Post({ postData }: Props) {
+export default function Article({ article }: Props) {
   return (
     <Layout>
       <Head>
-        <title>{postData.title}</title>
+        <title>{article.title}</title>
       </Head>{" "}
       <article>
-        <h1 className={utilStyles.headingXl}>{postData.title}</h1>
+        <h1 className={utilStyles.headingXl}>{article.title}</h1>
         <div className={utilStyles.lightText}>
-          <Date dateString={postData.created_at} />
+          <Date dateString={article.created_at} />
         </div>
-        <div dangerouslySetInnerHTML={{ __html: postData.body }} />
+        <div dangerouslySetInnerHTML={{ __html: article.body }} />
       </article>
     </Layout>
   )
@@ -40,10 +40,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   // Fetch necessary data for the article using `params.slug`
-  const postData = await getArticleBySlug(params.slug as string)
+  const article = await getArticleBySlug(params?.slug as string)
   return {
     props: {
-      postData,
+      article,
     },
   }
 }

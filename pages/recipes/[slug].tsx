@@ -74,7 +74,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   // Fetch necessary data for the article using `params.slug`
-  const recipe = await getRecipeBySlug(params.slug as string)
+  const recipe = await getRecipeBySlug(params?.slug as string)
   return {
     props: {
       recipe,

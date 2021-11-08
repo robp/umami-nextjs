@@ -67,6 +67,7 @@ export default function Layout({
         )}
       </header>
       <main>{children}</main>
+      <footer>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">
@@ -74,6 +75,7 @@ export default function Layout({
           </Link>
         </div>
       )}
+      </footer>
     </div>
   )
 }
