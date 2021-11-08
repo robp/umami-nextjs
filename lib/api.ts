@@ -1,3 +1,4 @@
+import RecipeType from "@/types/recipe"
 import { markdownToHtml } from "./utils"
 
 const fetchAPI = async (query, { variables } = { variables: {} }) => {
@@ -110,6 +111,36 @@ export const getRecipeBySlug = async (slug: string) => {
         created_at
         title
         summary
+        cooking_time
+        difficulty
+        ingredients {
+          id
+          name
+        }
+        media_image {
+          id
+          name
+          alternativeText
+          caption
+          width
+          height
+          url
+        }
+        number_of_servings
+        preparation_time
+        recipe_instruction
+        recipe_categories {
+          id
+          name
+          description
+          slug
+        }
+        tags {
+          id
+          name
+          description
+          slug
+        }
       }
     }
   `,
@@ -122,7 +153,7 @@ export const getRecipeBySlug = async (slug: string) => {
     }
   )
 
-  let recipe = data?.recipes[0]
+  let recipe: RecipeType = data?.recipes[0]
 
   if (!recipe) {
     return null
@@ -130,6 +161,7 @@ export const getRecipeBySlug = async (slug: string) => {
 
   // Convert markdown to HTML
   recipe.summary = await markdownToHtml(recipe.summary)
+  recipe.recipe_instruction = await markdownToHtml(recipe.recipe_instruction)
 
   return recipe
 }
