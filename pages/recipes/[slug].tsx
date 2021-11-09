@@ -3,6 +3,7 @@ import { getPlaiceholder } from "plaiceholder"
 import Head from "next/head"
 import Layout from "@/components/layout"
 import Image from "next/image"
+import Link from "next/link"
 // import MediaImage from "@/components/media-image"
 import RecipeType from "@/types/recipe"
 import RecipeCategoryType from "@/types/recipe-category"
@@ -28,11 +29,31 @@ export default function Recipe({ recipe, media_image_props }: Props) {
         <h1 className={utilStyles.headingXl}>{recipe.title}</h1>
         <p>
           Recipe Category:{" "}
-          {recipe.recipe_categories.map(
-            (category: RecipeCategoryType) => `${category.name} `
-          )}
+          {recipe.recipe_categories.map((category: RecipeCategoryType) => {
+            return (
+              <>
+                <Link
+                  key={category.id}
+                  href={`/recipe-category/${category.slug}`}
+                >
+                  {category.name}
+                </Link>{" "}
+              </>
+            )
+          })}
         </p>
-        <p>Tags: {recipe.tags.map((tag: TagType) => `${tag.name} `)}</p>
+        <p>
+          Tags:{" "}
+          {recipe.tags.map((tag: TagType) => {
+            return (
+              <>
+                <Link key={tag.id} href={`/tags/${tag.slug}`}>
+                  {tag.name}
+                </Link>{" "}
+              </>
+            )
+          })}
+        </p>{" "}
         <div dangerouslySetInnerHTML={{ __html: recipe.summary }} />
         <p>
           <Image
@@ -89,7 +110,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         ...img,
         placeholder: "blur",
         blurDataURL: base64,
-      }
+      },
     },
   }
 }

@@ -234,6 +234,107 @@ export const getPageBySlug = async (slug: string) => {
   return page
 }
 
+export const getAllTagSlugs = async () => {
+  const data = await fetchAPI(`
+    {
+      tags {
+        slug
+      }
+    }
+  `)
+  return data?.tags?.map(({ slug }) => {
+    return {
+      params: {
+        slug,
+      },
+    }
+  })
+}
+
+export const getTagBySlug = async (slug: string) => {
+  const data = await fetchAPI(
+    `
+    query TagBySlug($where: JSON){
+      tags(where: $where) {
+        id
+        name
+        description
+        slug
+      }
+    }
+  `,
+    {
+      variables: {
+        where: {
+          slug,
+        },
+      },
+    }
+  )
+
+  let tag = data?.tags[0]
+
+  if (!tag) {
+    return null
+  }
+
+  // Convert markdown to HTML
+  tag.description = await markdownToHtml(tag.description)
+
+  return tag
+}
+
+
+export const getAllRecipeCategorySlugs = async () => {
+  const data = await fetchAPI(`
+    {
+      recipeCategories {
+        slug
+      }
+    }
+  `)
+  return data?.recipeCategories?.map(({ slug }) => {
+    return {
+      params: {
+        slug,
+      },
+    }
+  })
+}
+
+export const getRecipeCategoryBySlug = async (slug: string) => {
+  const data = await fetchAPI(
+    `
+    query RecipeCategoryBySlug($where: JSON){
+      recipeCategories(where: $where) {
+        id
+        name
+        description
+        slug
+      }
+    }
+  `,
+    {
+      variables: {
+        where: {
+          slug,
+        },
+      },
+    }
+  )
+
+  let recipeCategory = data?.recipeCategories[0]
+
+  if (!recipeCategory) {
+    return null
+  }
+
+  // Convert markdown to HTML
+  recipeCategory.description = await markdownToHtml(recipeCategory.description)
+
+  return recipeCategory
+}
+
 export const getAllPostsForHome = async preview => {
   const data = await fetchAPI(
     `

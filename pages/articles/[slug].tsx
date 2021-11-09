@@ -4,6 +4,7 @@ import Head from "next/head"
 import Layout from "@/components/layout"
 import Date from "@/components/date"
 import Image from "next/image"
+import Link from "next/link"
 import ArticleType from "@/types/article"
 import TagType from "@/types/tag"
 
@@ -21,13 +22,24 @@ export default function Article({ article, media_image_props }: Props) {
     <Layout>
       <Head>
         <title>{article.title}</title>
-      </Head>{" "}
+      </Head>
       <article>
         <h1 className={utilStyles.headingXl}>{article.title}</h1>
         <div className={utilStyles.lightText}>
           <Date dateString={article.created_at} />
         </div>
-        <p>Tags: {article.tags.map((tag: TagType) => `${tag.name} `)}</p>
+        <p>
+          Tags:{" "}
+          {article.tags.map((tag: TagType) => {
+            return (
+              <>
+                <Link key={tag.id} href={`/tags/${tag.slug}`}>
+                  {tag.name}
+                </Link>{" "}
+              </>
+            )
+          })}
+        </p>
         <p>
           <Image
             priority={true}

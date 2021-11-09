@@ -1,5 +1,6 @@
 // import useSWR from "swr"
 import { GetStaticProps } from "next"
+import classNames from "classnames"
 import Head from "next/head"
 import Layout, { siteTitle } from "@/components/layout"
 import Link from "next/link"
@@ -33,6 +34,7 @@ export default function Home({ allPages, allArticles, allRecipes }: Props) {
         </title>
       </Head>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+        <h1 className={classNames(utilStyles.headingXl, utilStyles.visuallyHidden)}>Home</h1>
         <h2 className={utilStyles.headingLg}>Pages</h2>
         <ul className={utilStyles.list}>
           {allPages.map(({ id, slug, created_at, title }) => (
