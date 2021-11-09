@@ -1,6 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from "next"
 import Head from "next/head"
 import Layout from "@/components/layout"
+import Link from "next/link"
 // import Image from "next/image"
 
 import RecipeCategoryType from "@/types/recipe-category"
@@ -13,10 +14,11 @@ import utilStyles from "@/styles/utils.module.scss"
 
 type Props = {
   recipeCategory: RecipeCategoryType
-  posts: [ArticleType | RecipeType]
 }
 
-export default function RecipeCategory({ recipeCategory, posts }: Props) {
+export default function RecipeCategory({ recipeCategory }: Props) {
+  console.log("recipes", recipeCategory.recipes)
+
   return (
     <Layout>
       <Head>
@@ -29,6 +31,20 @@ export default function RecipeCategory({ recipeCategory, posts }: Props) {
             dangerouslySetInnerHTML={{ __html: recipeCategory.description }}
           />
         </p>
+        {recipeCategory.recipes.length > 0 && (
+          <>
+            <h2 className={utilStyles.headingLg}>Recipes</h2>
+            <ul>
+              {recipeCategory.recipes.map((recipe: RecipeType) => {
+                return (
+                  <li key={recipe.id}>
+                    <Link href={`/recipes/${recipe.slug}`}>{recipe.title}</Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </>
+        )}
       </article>
     </Layout>
   )

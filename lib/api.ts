@@ -260,6 +260,18 @@ export const getTagBySlug = async (slug: string) => {
         name
         description
         slug
+        articles {
+          id
+          created_at
+          title
+          slug
+        }
+        recipes {
+          id
+          created_at
+          title
+          slug
+        }
       }
     }
   `,
@@ -311,6 +323,12 @@ export const getRecipeCategoryBySlug = async (slug: string) => {
         name
         description
         slug
+        recipes {
+          id
+          created_at
+          title
+          slug
+        }
       }
     }
   `,

@@ -1,6 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from "next"
 import Head from "next/head"
 import Layout from "@/components/layout"
+import Link from "next/link"
 // import Image from "next/image"
 
 import TagType from "@/types/tag"
@@ -13,10 +14,12 @@ import utilStyles from "@/styles/utils.module.scss"
 
 type Props = {
   tag: TagType
-  posts: [ArticleType | RecipeType]
 }
 
-export default function Tag({ tag, posts }: Props) {
+export default function Tag({ tag }: Props) {
+  console.log("articles", tag.articles)
+  console.log("recipes", tag.recipes)
+
   return (
     <Layout>
       <Head>
@@ -27,6 +30,38 @@ export default function Tag({ tag, posts }: Props) {
         <p>
           <div dangerouslySetInnerHTML={{ __html: tag.description }} />
         </p>
+
+        {tag.articles.length > 0 && (
+          <>
+            <h2 className={utilStyles.headingLg}>Articles</h2>
+            <ul>
+              {tag.articles.map((article: ArticleType) => {
+                return (
+                  <li key={article.id}>
+                    <Link href={`/articles/${article.slug}`}>
+                      {article.title}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </>
+        )}
+
+        {tag.recipes.length > 0 && (
+          <>
+            <h2 className={utilStyles.headingLg}>Recipes</h2>
+            <ul>
+              {tag.recipes.map((recipe: RecipeType) => {
+                return (
+                  <li key={recipe.id}>
+                    <Link href={`/recipes/${recipe.slug}`}>{recipe.title}</Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </>
+        )}
       </article>
     </Layout>
   )
