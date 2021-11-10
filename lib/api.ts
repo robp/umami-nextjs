@@ -388,6 +388,54 @@ export const getAllPostsForHome = async preview => {
   return [data?.pages, data?.articles, data?.recipes]
 }
 
+export const getAllArticles = async preview => {
+  const data = await fetchAPI(
+    `
+    query Posts($where: JSON){
+      articles(sort: "id:asc", where: $where) {
+        id
+        slug
+        created_at
+        title
+      }
+    }
+  `
+    // {
+    //   variables: {
+    //     where: {
+    //       ...(preview ? {} : { status: "published" }),
+    //     },
+    //   },
+    // }
+  )
+
+  return data?.articles
+}
+
+export const getAllRecipes = async preview => {
+  const data = await fetchAPI(
+    `
+    query Posts($where: JSON){
+      recipes(sort: "id:asc", where: $where) {
+        id
+        slug
+        created_at
+        title
+      }
+    }
+  `
+    // {
+    //   variables: {
+    //     where: {
+    //       ...(preview ? {} : { status: "published" }),
+    //     },
+    //   },
+    // }
+  )
+
+  return data?.recipes
+}
+
 export const getPreviewPostBySlug = async slug => {
   const data = await fetchAPI(
     `
