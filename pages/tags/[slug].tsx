@@ -27,9 +27,7 @@ export default function Tag({ tag }: Props) {
       </Head>
       <article>
         <h1 className={utilStyles.headingXl}>{tag.name}</h1>
-        <p>
-          <div dangerouslySetInnerHTML={{ __html: tag.description }} />
-        </p>
+        <div dangerouslySetInnerHTML={{ __html: tag.description }} />
 
         {tag.articles.length > 0 && (
           <>

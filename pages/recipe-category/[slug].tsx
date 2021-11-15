@@ -26,11 +26,7 @@ export default function RecipeCategory({ recipeCategory }: Props) {
       </Head>
       <article>
         <h1 className={utilStyles.headingXl}>{recipeCategory.name}</h1>
-        <p>
-          <div
-            dangerouslySetInnerHTML={{ __html: recipeCategory.description }}
-          />
-        </p>
+        <div dangerouslySetInnerHTML={{ __html: recipeCategory.description }} />
         {recipeCategory.recipes.length > 0 && (
           <>
             <h2 className={utilStyles.headingLg}>Recipes</h2>

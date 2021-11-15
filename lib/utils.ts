@@ -11,3 +11,20 @@ export const markdownToHtml = async (markdown: string) => {
   const processedContent = await remark().use(html).process(markdown)
   return processedContent.toString()
 }
+
+/**
+ * Returns the relative URL of the content item specifie by the parameters.
+ * @param type
+ * @param slug
+ * @returns {string}
+ */
+export const getPathFromSlug = (type: string, slug: string) => {
+  switch (type) {
+    case 'article':
+      return `articles/${slug}`
+    case 'recipe':
+      return `recipes/${slug}`
+    default:
+      return slug
+  }
+}

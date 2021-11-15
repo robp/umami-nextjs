@@ -11,6 +11,7 @@ import TagType from "@/types/tag"
 import { getAllArticleSlugs, getArticleBySlug } from "@/lib/api"
 
 import utilStyles from "@/styles/utils.module.scss"
+import React from "react"
 
 type Props = {
   article: ArticleType
@@ -32,21 +33,17 @@ export default function Article({ article, media_image_props }: Props) {
           Tags:{" "}
           {article.tags.map((tag: TagType) => {
             return (
-              <>
-                <Link key={tag.id} href={`/tags/${tag.slug}`}>
-                  {tag.name}
-                </Link>{" "}
-              </>
+              <React.Fragment key={tag.id}>
+                <Link href={`/tags/${tag.slug}`}>{tag.name}</Link>{" "}
+              </React.Fragment>
             )
           })}
         </p>
-        <p>
-          <Image
-            priority={true}
-            alt={article.media_image.alternativeText}
-            {...media_image_props}
-          />
-        </p>
+        <Image
+          priority={true}
+          alt={article.media_image.alternativeText}
+          {...media_image_props}
+        />
         <div dangerouslySetInnerHTML={{ __html: article.body }} />
       </article>
     </Layout>

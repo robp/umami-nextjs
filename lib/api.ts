@@ -39,6 +39,76 @@ export const getAllArticleSlugs = async () => {
   })
 }
 
+export const getMenuBySlug = async (slug: string) => {
+  const data = await fetchAPI(
+    `
+    fragment MenuItemFragment on MenuItem {
+      id
+      title
+      link
+      menu {
+        id
+      }
+      parent {
+        id
+      }
+      content_link {
+        __typename
+        ... on ComponentMenuComponentsArticleLink {
+          content: article {
+            title
+            slug
+          }
+        }
+        ... on ComponentMenuComponentsPageLink {
+          content: page {
+            title
+            slug
+          }
+        }
+        ... on ComponentMenuComponentsRecipeLink {
+          content: recipe {
+            title
+            slug
+          }
+        }
+      }
+    }
+    fragment MenuItemsFragment on Menu {
+      menu_items {
+        ...MenuItemFragment
+        children {
+          ...MenuItemFragment
+          children {
+            ...MenuItemFragment
+            children {
+              ...MenuItemFragment
+            }
+          }
+        }
+      }
+    }
+    query MenuBySlug($where: JSON) {
+      menus(where: $where) {
+        id
+        title
+        slug
+        ...MenuItemsFragment
+      }
+    }
+  `,
+    {
+      variables: {
+        where: {
+          slug,
+        },
+      },
+    }
+  )
+
+  return data?.menus[0]
+}
+
 export const getArticleBySlug = async (slug: string) => {
   const data = await fetchAPI(
     `
@@ -296,7 +366,6 @@ export const getTagBySlug = async (slug: string) => {
   return tag
 }
 
-
 export const getAllRecipeCategorySlugs = async () => {
   const data = await fetchAPI(`
     {
@@ -385,6 +454,7 @@ export const getAllPostsForHome = async preview => {
     //   },
     // }
   )
+
   return [data?.pages, data?.articles, data?.recipes]
 }
 

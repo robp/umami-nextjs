@@ -13,6 +13,7 @@ import { getAllRecipeSlugs, getRecipeBySlug } from "@/lib/api"
 
 import utilStyles from "@/styles/utils.module.scss"
 import IngredientType from "@/types/ingredient"
+import React from "react"
 
 type Props = {
   recipe: RecipeType
@@ -31,14 +32,11 @@ export default function Recipe({ recipe, media_image_props }: Props) {
           Recipe Category:{" "}
           {recipe.recipe_categories.map((category: RecipeCategoryType) => {
             return (
-              <>
-                <Link
-                  key={category.id}
-                  href={`/recipe-category/${category.slug}`}
-                >
+              <React.Fragment key={category.id}>
+                <Link href={`/recipe-category/${category.slug}`}>
                   {category.name}
                 </Link>{" "}
-              </>
+              </React.Fragment>
             )
           })}
         </p>
@@ -46,22 +44,18 @@ export default function Recipe({ recipe, media_image_props }: Props) {
           Tags:{" "}
           {recipe.tags.map((tag: TagType) => {
             return (
-              <>
-                <Link key={tag.id} href={`/tags/${tag.slug}`}>
-                  {tag.name}
-                </Link>{" "}
-              </>
+              <React.Fragment key={tag.id}>
+                <Link href={`/tags/${tag.slug}`}>{tag.name}</Link>{" "}
+              </React.Fragment>
             )
           })}
         </p>{" "}
         <div dangerouslySetInnerHTML={{ __html: recipe.summary }} />
-        <p>
-          <Image
-            priority={true}
-            alt={recipe.media_image.alternativeText}
-            {...media_image_props}
-          />
-        </p>
+        <Image
+          priority={true}
+          alt={recipe.media_image.alternativeText}
+          {...media_image_props}
+        />
         <div>
           <p>Preparation time: {recipe.preparation_time} minutes</p>
           <p>Cooking time: {recipe.cooking_time} minutes</p>

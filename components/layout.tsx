@@ -1,9 +1,10 @@
 import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
+import { MainMenu } from "./main-menu"
+
 import styles from "@/styles/layout.module.scss"
 import utilStyles from "@/styles/utils.module.scss"
-import menuStyles from "@/styles/menu.module.scss"
 
 export const siteTitle = "Umami Food Magazine"
 
@@ -13,7 +14,7 @@ export default function Layout({
 }: {
   children: React.ReactNode
   home?: boolean
-}) {
+  }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -38,29 +39,7 @@ export default function Layout({
           </a>
         </Link>
         <div className={utilStyles.visuallyHidden}>{siteTitle}</div>
-        <nav
-          className={menuStyles.nav}
-          role="navigation"
-          aria-labelledby="block-umami-main-menu-menu"
-        >
-          <h2
-            className={utilStyles.visuallyHidden}
-            id="block-umami-main-menu-menu"
-          >
-            Main navigation
-          </h2>
-          <ul className={menuStyles.menuMain}>
-            <li className={menuStyles.menuItem}>
-              <Link href="/">Home</Link>
-            </li>
-            <li className={menuStyles.menuItem}>
-              <Link href="/articles">Articles</Link>
-            </li>
-            <li className={menuStyles.menuItem}>
-              <Link href="/recipes">Recipes</Link>
-            </li>
-          </ul>
-        </nav>
+        <MainMenu />
       </header>
       <main>{children}</main>
       <footer>

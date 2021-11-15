@@ -7,6 +7,7 @@ import { CMS_NAME } from "@/lib/constants"
 import RecipeType from "@/types/recipe"
 
 import { getAllRecipes } from "@/lib/api"
+import { getPathFromSlug } from "@/lib/utils"
 
 import utilStyles from "@/styles/utils.module.scss"
 
@@ -27,7 +28,7 @@ export default function Home({ allRecipes }: Props) {
         <ul className={utilStyles.list}>
           {allRecipes.map(({ id, slug, created_at, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              <Link href={`/recipes/${slug}`}>
+              <Link href={`/${getPathFromSlug('recipe', slug)}`}>
                 <a>{title}</a>
               </Link>
               <br />

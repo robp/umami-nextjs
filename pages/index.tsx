@@ -11,7 +11,8 @@ import PageType from "@/types/page"
 import ArticleType from "@/types/article"
 import RecipeType from "@/types/recipe"
 
-import { getAllPostsForHome } from "@/lib/api"
+import { getAllPostsForHome, getMenuBySlug } from "@/lib/api"
+import { getPathFromSlug } from "@/lib/utils"
 
 import utilStyles from "@/styles/utils.module.scss"
 
@@ -34,12 +35,19 @@ export default function Home({ allPages, allArticles, allRecipes }: Props) {
         </title>
       </Head>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h1 className={classNames(utilStyles.headingXl, utilStyles.visuallyHidden)}>Home</h1>
+        <h1
+          className={classNames(
+            utilStyles.headingXl,
+            utilStyles.visuallyHidden
+          )}
+        >
+          Home
+        </h1>
         <h2 className={utilStyles.headingLg}>Pages</h2>
         <ul className={utilStyles.list}>
           {allPages.map(({ id, slug, created_at, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              <Link href={`/${slug}`}>
+              <Link href={`/${getPathFromSlug("page", slug)}`}>
                 <a>{title}</a>
               </Link>
               <br />
@@ -53,7 +61,7 @@ export default function Home({ allPages, allArticles, allRecipes }: Props) {
         <ul className={utilStyles.list}>
           {allArticles.map(({ id, slug, created_at, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              <Link href={`/articles/${slug}`}>
+              <Link href={`/${getPathFromSlug("article", slug)}`}>
                 <a>{title}</a>
               </Link>
               <br />
@@ -67,7 +75,7 @@ export default function Home({ allPages, allArticles, allRecipes }: Props) {
         <ul className={utilStyles.list}>
           {allRecipes.map(({ id, slug, created_at, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              <Link href={`/recipes/${slug}`}>
+              <Link href={`/${getPathFromSlug('recipe', slug)}`}>
                 <a>{title}</a>
               </Link>
               <br />
