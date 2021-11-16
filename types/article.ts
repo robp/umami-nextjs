@@ -7,7 +7,7 @@ type ArticleType = {
   title: string
   body: string
   media_image: MediaImageType
-  tags: [TagType]
+  tags: TagType[]
   slug: string
 }
 

@@ -5,7 +5,7 @@ type RecipeCategoryType = {
   name: string
   description: string
   slug: string
-  recipes: [RecipeType]
+  recipes: RecipeType[]
 }
 
 export default RecipeCategoryType

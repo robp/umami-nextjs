@@ -6,8 +6,8 @@ type TagType = {
   name: string
   description: string
   slug: string
-  articles: [ArticleType]
-  recipes: [RecipeType]
+  articles: ArticleType[]
+  recipes: RecipeType[]
 }
 
 export default TagType

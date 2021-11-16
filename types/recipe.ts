@@ -10,13 +10,13 @@ type RecipeType = {
   summary: string
   cooking_time: number
   difficulty: string
-  ingredients: [IngredientType]
+  ingredients: IngredientType[]
   media_image: MediaImageType
   number_of_servings: number
   preparation_time: number
   recipe_instruction: string
-  recipe_categories: [RecipeCategoryType]
-  tags: [TagType]
+  recipe_categories: RecipeCategoryType[]
+  tags: TagType[]
   slug: string
 }
 

@@ -54,6 +54,10 @@ export default function Layout({
             </Link>
           </div>
         )}
+        <div className={styles.builtWith}>
+          Built with <a href="https://nextjs.org/">Next.js</a>.{" "}
+          <a href="https://github.com/robp/umami-nextjs">Source code</a>.
+        </div>
       </footer>
     </div>
   )
