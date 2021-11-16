@@ -8,8 +8,9 @@ import Link from "next/link"
 import RecipeType from "@/types/recipe"
 import RecipeCategoryType from "@/types/recipe-category"
 import TagType from "@/types/tag"
+import MenuType from "@/types/menu"
 
-import { getAllRecipeSlugs, getRecipeBySlug } from "@/lib/api"
+import { getAllRecipeSlugs, getRecipeBySlug, getMenuBySlug } from "@/lib/api"
 
 import utilStyles from "@/styles/utils.module.scss"
 import IngredientType from "@/types/ingredient"
@@ -18,11 +19,12 @@ import React from "react"
 type Props = {
   recipe: RecipeType
   media_image_props: any
+  mainMenu: MenuType
 }
 
-export default function Recipe({ recipe, media_image_props }: Props) {
+export default function Recipe({ recipe, media_image_props, mainMenu }: Props) {
   return (
-    <Layout>
+    <Layout mainMenu={mainMenu}>
       <Head>
         <title>{recipe.title}</title>
       </Head>{" "}
@@ -96,6 +98,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { base64, img } = await getPlaiceholder(
     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${recipe?.media_image.url}`
   )
+  const mainMenu = await getMenuBySlug("main-navigation")
 
   return {
     props: {
@@ -105,6 +108,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         placeholder: "blur",
         blurDataURL: base64,
       },
+      mainMenu,
     },
   }
 }

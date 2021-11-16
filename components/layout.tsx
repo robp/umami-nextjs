@@ -1,20 +1,24 @@
 import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
-import { MainMenu } from "./main-menu"
+// import { MainMenu } from "./main-menu"
+import { Menu } from "./menu"
 
 import styles from "@/styles/layout.module.scss"
 import utilStyles from "@/styles/utils.module.scss"
+import MenuType from "@/types/menu"
 
 export const siteTitle = "Umami Food Magazine"
 
 export default function Layout({
   children,
   home,
+  mainMenu,
 }: {
   children: React.ReactNode
   home?: boolean
-  }) {
+  mainMenu: MenuType
+}) {
   return (
     <div className={styles.container}>
       <Head>
@@ -39,7 +43,7 @@ export default function Layout({
           </a>
         </Link>
         <div className={utilStyles.visuallyHidden}>{siteTitle}</div>
-        <MainMenu />
+        <Menu menuData={mainMenu} />
       </header>
       <main>{children}</main>
       <footer>

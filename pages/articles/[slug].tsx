@@ -7,8 +7,9 @@ import Image from "next/image"
 import Link from "next/link"
 import ArticleType from "@/types/article"
 import TagType from "@/types/tag"
+import MenuType from "@/types/menu"
 
-import { getAllArticleSlugs, getArticleBySlug } from "@/lib/api"
+import { getAllArticleSlugs, getArticleBySlug, getMenuBySlug } from "@/lib/api"
 
 import utilStyles from "@/styles/utils.module.scss"
 import React from "react"
@@ -16,11 +17,16 @@ import React from "react"
 type Props = {
   article: ArticleType
   media_image_props: any
+  mainMenu: MenuType
 }
 
-export default function Article({ article, media_image_props }: Props) {
+export default function Article({
+  article,
+  media_image_props,
+  mainMenu,
+}: Props) {
   return (
-    <Layout>
+    <Layout mainMenu={mainMenu}>
       <Head>
         <title>{article.title}</title>
       </Head>
@@ -65,6 +71,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { base64, img } = await getPlaiceholder(
     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${article?.media_image.url}`
   )
+  const mainMenu = await getMenuBySlug("main-navigation")
   return {
     props: {
       article,
@@ -73,6 +80,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         placeholder: "blur",
         blurDataURL: base64,
       },
+      mainMenu,
     },
   }
 }

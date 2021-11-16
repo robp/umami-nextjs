@@ -5,19 +5,21 @@ import Link from "next/link"
 import Date from "@/components/date"
 import { CMS_NAME } from "@/lib/constants"
 import ArticleType from "@/types/article"
+import MenuType from "@/types/menu"
 
-import { getAllArticles } from "@/lib/api"
+import { getAllArticles, getMenuBySlug } from "@/lib/api"
 import { getPathFromSlug } from "@/lib/utils"
 
 import utilStyles from "@/styles/utils.module.scss"
 
 type Props = {
   allArticles: ArticleType[]
+  mainMenu: MenuType
 }
 
-export default function Home({ allArticles }: Props) {
+export default function Home({ allArticles, mainMenu }: Props) {
   return (
-    <Layout home>
+    <Layout home mainMenu={mainMenu}>
       <Head>
         <title>
           {CMS_NAME}: {siteTitle}
@@ -28,7 +30,7 @@ export default function Home({ allArticles }: Props) {
         <ul className={utilStyles.list}>
           {allArticles.map(({ id, slug, created_at, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              <Link href={`/${getPathFromSlug('article', slug)}`}>
+              <Link href={`/${getPathFromSlug("article", slug)}`}>
                 <a>{title}</a>
               </Link>
               <br />
@@ -44,9 +46,9 @@ export default function Home({ allArticles }: Props) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview = null }) => {
-  const allArticles =
-    (await getAllArticles(preview)) || []
+  const allArticles = (await getAllArticles(preview)) || []
+  const mainMenu = await getMenuBySlug("main-navigation")
   return {
-    props: { allArticles, preview },
+    props: { allArticles, mainMenu, preview },
   }
 }

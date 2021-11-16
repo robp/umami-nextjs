@@ -10,6 +10,7 @@ import { CMS_NAME } from "@/lib/constants"
 import PageType from "@/types/page"
 import ArticleType from "@/types/article"
 import RecipeType from "@/types/recipe"
+import MenuType from "@/types/menu"
 
 import { getAllPostsForHome, getMenuBySlug } from "@/lib/api"
 import { getPathFromSlug } from "@/lib/utils"
@@ -20,15 +21,16 @@ type Props = {
   allPages: PageType[]
   allArticles: ArticleType[]
   allRecipes: RecipeType[]
+  mainMenu: MenuType
 }
 
-export default function Home({ allPages, allArticles, allRecipes }: Props) {
+export default function Home({ allPages, allArticles, allRecipes, mainMenu }: Props) {
   // const { data, error } = useSWR("/api/hello", fetcher)
   // if (error) return `<div>failed to load: ${error}</div>`
   // if (!data) return <div>loading...</div>
 
   return (
-    <Layout home>
+    <Layout home mainMenu={mainMenu}>
       <Head>
         <title>
           {CMS_NAME}: {siteTitle}
@@ -93,8 +95,9 @@ export default function Home({ allPages, allArticles, allRecipes }: Props) {
 export const getStaticProps: GetStaticProps = async ({ preview = null }) => {
   const [allPages, allArticles, allRecipes] =
     (await getAllPostsForHome(preview)) || []
+  const mainMenu = await getMenuBySlug("main-navigation")
   return {
-    props: { allPages, allArticles, allRecipes, preview },
+    props: { allPages, allArticles, allRecipes, preview, mainMenu },
   }
 }
 

@@ -1,8 +1,9 @@
 import { GetStaticProps, GetStaticPaths } from "next"
 import Layout from "@/components/layout"
 import Head from "next/head"
+import MenuType from "@/types/menu"
 
-import { getAllPageSlugs, getPageBySlug } from "@/lib/api"
+import { getAllPageSlugs, getPageBySlug, getMenuBySlug } from "@/lib/api"
 
 import utilStyles from "@/styles/utils.module.scss"
 
@@ -11,14 +12,15 @@ type Props = {
     title: string
     body: string
   }
+  mainMenu: MenuType
 }
 
-export default function Post({ postData }: Props) {
+export default function Post({ postData, mainMenu }: Props) {
   return (
-    <Layout>
+    <Layout mainMenu={mainMenu}>
       <Head>
         <title>{postData.title}</title>
-      </Head>{" "}
+      </Head>
       <article>
         <h1 className={utilStyles.headingXl}>{postData.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: postData.body }} />
@@ -39,9 +41,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   // Fetch necessary data for the article using `params.slug`
   const postData = await getPageBySlug(params.slug as string)
+  const mainMenu = await getMenuBySlug("main-navigation")
   return {
     props: {
       postData,
+      mainMenu,
     },
   }
 }

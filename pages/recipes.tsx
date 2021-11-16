@@ -5,19 +5,21 @@ import Link from "next/link"
 import Date from "@/components/date"
 import { CMS_NAME } from "@/lib/constants"
 import RecipeType from "@/types/recipe"
+import MenuType from "@/types/menu"
 
-import { getAllRecipes } from "@/lib/api"
+import { getAllRecipes, getMenuBySlug } from "@/lib/api"
 import { getPathFromSlug } from "@/lib/utils"
 
 import utilStyles from "@/styles/utils.module.scss"
 
 type Props = {
   allRecipes: RecipeType[]
+  mainMenu: MenuType
 }
 
-export default function Home({ allRecipes }: Props) {
+export default function Home({ allRecipes, mainMenu }: Props) {
   return (
-    <Layout home>
+    <Layout home mainMenu={mainMenu}>
       <Head>
         <title>
           {CMS_NAME}: {siteTitle}
@@ -28,7 +30,7 @@ export default function Home({ allRecipes }: Props) {
         <ul className={utilStyles.list}>
           {allRecipes.map(({ id, slug, created_at, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              <Link href={`/${getPathFromSlug('recipe', slug)}`}>
+              <Link href={`/${getPathFromSlug("recipe", slug)}`}>
                 <a>{title}</a>
               </Link>
               <br />
@@ -45,7 +47,8 @@ export default function Home({ allRecipes }: Props) {
 
 export const getStaticProps: GetStaticProps = async ({ preview = null }) => {
   const allRecipes = (await getAllRecipes(preview)) || []
+  const mainMenu = await getMenuBySlug("main-navigation")
   return {
-    props: { allRecipes, preview },
+    props: { allRecipes, mainMenu, preview },
   }
 }

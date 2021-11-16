@@ -2,26 +2,26 @@ import { GetStaticProps, GetStaticPaths } from "next"
 import Head from "next/head"
 import Layout from "@/components/layout"
 import Link from "next/link"
-// import Image from "next/image"
-
 import TagType from "@/types/tag"
 import ArticleType from "@/types/article"
 import RecipeType from "@/types/recipe"
+import MenuType from "@/types/menu"
 
-import { getAllTagSlugs, getTagBySlug } from "@/lib/api"
+import { getAllTagSlugs, getTagBySlug, getMenuBySlug } from "@/lib/api"
 
 import utilStyles from "@/styles/utils.module.scss"
 
 type Props = {
   tag: TagType
+  mainMenu: MenuType
 }
 
-export default function Tag({ tag }: Props) {
+export default function Tag({ tag, mainMenu }: Props) {
   console.log("articles", tag.articles)
   console.log("recipes", tag.recipes)
 
   return (
-    <Layout>
+    <Layout mainMenu={mainMenu}>
       <Head>
         <title>{tag.name}</title>
       </Head>
@@ -77,9 +77,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   // Fetch necessary data for the article using `params.slug`
   const tag = await getTagBySlug(params?.slug as string)
+  const mainMenu = await getMenuBySlug("main-navigation")
   return {
     props: {
       tag,
+      mainMenu,
     },
   }
 }
