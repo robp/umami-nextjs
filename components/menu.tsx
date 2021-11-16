@@ -10,14 +10,11 @@ type Props = {
 }
 
 export const Menu = ({ menuData }: Props) => {
+  const menuId = `${menuData.slug}-menu`
   return (
-    <nav
-      className={menuStyles.nav}
-      role="navigation"
-      aria-labelledby="block-umami-main-menu-menu"
-    >
-      <h2 className={utilStyles.visuallyHidden} id="block-umami-main-menu-menu">
-        Main navigation
+    <nav className={menuStyles.nav} role="navigation" aria-labelledby={menuId}>
+      <h2 className={utilStyles.visuallyHidden} id={menuId}>
+        {menuData.title}
       </h2>
       <ul className={menuStyles.menuMain}>
         {menuData.menu_items.map(menuItem => (
