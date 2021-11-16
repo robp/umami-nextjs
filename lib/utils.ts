@@ -20,10 +20,14 @@ export const markdownToHtml = async (markdown: string) => {
  */
 export const getPathFromSlug = (type: string, slug: string) => {
   switch (type) {
-    case 'article':
+    case "article":
       return `articles/${slug}`
-    case 'recipe':
+    case "recipe":
       return `recipes/${slug}`
+    case "recipe-category":
+      return `recipe-category/${slug}`
+    case "tag":
+      return `tags/${slug}`
     default:
       return slug
   }

@@ -383,6 +383,26 @@ export const getAllRecipeCategorySlugs = async () => {
   })
 }
 
+export const getAllRecipeCategories = async () => {
+  const data = await fetchAPI(`
+    {
+      recipeCategories {
+        id
+        name
+        description
+        slug
+        recipes {
+          id
+          created_at
+          title
+          slug
+        }
+      }
+    }
+  `)
+  return data?.recipeCategories
+}
+
 export const getRecipeCategoryBySlug = async (slug: string) => {
   const data = await fetchAPI(
     `

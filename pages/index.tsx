@@ -11,20 +11,22 @@ import PageType from "@/types/page"
 import ArticleType from "@/types/article"
 import RecipeType from "@/types/recipe"
 import MenuType from "@/types/menu"
-
-import { getAllPostsForHome, getMenuBySlug } from "@/lib/api"
+import { RecipeCollections } from "@/components/recipe-collections"
+import { getAllPostsForHome, getAllRecipeCategories, getMenuBySlug } from "@/lib/api"
 import { getPathFromSlug } from "@/lib/utils"
 
 import utilStyles from "@/styles/utils.module.scss"
+import RecipeCategoryType from "@/types/recipe-category"
 
 type Props = {
   allPages: PageType[]
   allArticles: ArticleType[]
   allRecipes: RecipeType[]
   mainMenu: MenuType
+  recipeCategories: RecipeCategoryType[]
 }
 
-export default function Home({ allPages, allArticles, allRecipes, mainMenu }: Props) {
+export default function Home({ allPages, allArticles, allRecipes, mainMenu, recipeCategories }: Props) {
   // const { data, error } = useSWR("/api/hello", fetcher)
   // if (error) return `<div>failed to load: ${error}</div>`
   // if (!data) return <div>loading...</div>
@@ -87,6 +89,7 @@ export default function Home({ allPages, allArticles, allRecipes, mainMenu }: Pr
             </li>
           ))}
         </ul>
+        <RecipeCollections recipeCategories={recipeCategories} />
       </section>
     </Layout>
   )
@@ -96,8 +99,9 @@ export const getStaticProps: GetStaticProps = async ({ preview = null }) => {
   const [allPages, allArticles, allRecipes] =
     (await getAllPostsForHome(preview)) || []
   const mainMenu = await getMenuBySlug("main-navigation")
+  const recipeCategories = await getAllRecipeCategories()
   return {
-    props: { allPages, allArticles, allRecipes, preview, mainMenu },
+    props: { allPages, allArticles, allRecipes, preview, mainMenu, recipeCategories },
   }
 }
 

@@ -16,8 +16,6 @@ type Props = {
 }
 
 export default function RecipeCategory({ recipeCategory, mainMenu }: Props) {
-  console.log("recipes", recipeCategory.recipes)
-
   return (
     <Layout mainMenu={mainMenu}>
       <Head>
