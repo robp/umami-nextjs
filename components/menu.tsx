@@ -1,11 +1,15 @@
 import React from "react"
 import Link from "next/link"
+import MenuType from "@/types/menu"
 
 import utilStyles from "@/styles/utils.module.scss"
 import menuStyles from "@/styles/menu.module.scss"
 
-export const Menu = ({ menuData }) => {
-  console.log(menuData)
+type Props = {
+  menuData: MenuType
+}
+
+export const Menu = ({ menuData }: Props) => {
   return (
     <nav
       className={menuStyles.nav}
