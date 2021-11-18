@@ -17,9 +17,6 @@ type Props = {
 }
 
 export default function Tag({ tag, mainMenu }: Props) {
-  console.log("articles", tag.articles)
-  console.log("recipes", tag.recipes)
-
   return (
     <Layout mainMenu={mainMenu}>
       <Head>
