@@ -45,7 +45,7 @@ export default function Home({ allRecipes, mainMenu }: Props) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview = null }) => {
+export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const allRecipes = (await getAllRecipes(preview)) || []
   const mainMenu = await getMenuBySlug("main-navigation")
   return {

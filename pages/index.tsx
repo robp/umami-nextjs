@@ -95,7 +95,7 @@ export default function Home({ allPages, allArticles, allRecipes, mainMenu, reci
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview = null }) => {
+export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const [allPages, allArticles, allRecipes] =
     (await getAllPostsForHome(preview)) || []
   const mainMenu = await getMenuBySlug("main-navigation")

@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { Menu } from "./menu"
-import { getMenuBySlug } from "@/lib/api"
+// import React, { useCallback, useEffect, useState } from "react"
+// import { Menu } from "./menu"
+// import { getMenuBySlug } from "@/lib/api"
 
 /**
  * Component that loads the main menu using with a client-side API request.
@@ -10,18 +10,19 @@ import { getMenuBySlug } from "@/lib/api"
  * @returns
  */
 export const MainMenu = () => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [menuData, setMenuData] = useState(null)
+  // const [isLoading, setIsLoading] = useState(true)
+  // const [menuData, setMenuData] = useState(null)
 
-  const getMainMenu = useCallback(async () => {
-    const data = await getMenuBySlug("main-navigation")
-    setMenuData(data)
-    setIsLoading(false)
-  }, [])
+  // const getMainMenu = useCallback(async () => {
+  //   const data = await getMenuBySlug("main-navigation")
+  //   setMenuData(data)
+  //   setIsLoading(false)
+  // }, [])
 
-  useEffect(() => {
-    getMainMenu()
-  }, [getMainMenu])
+  // useEffect(() => {
+  //   getMainMenu()
+  // }, [getMainMenu])
 
-  return !isLoading && <Menu menuData={menuData} />
+  // return !isLoading && <Menu menuData={menuData} />
+  return null
 }

@@ -1,7 +1,7 @@
 import RecipeType from "@/types/recipe"
 import { markdownToHtml } from "./utils"
 
-const fetchAPI = async (query, { variables } = { variables: {} }) => {
+const fetchAPI = async (query: string, { variables } = { variables: {} }) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/graphql`, {
     method: "POST",
     headers: {
@@ -30,7 +30,7 @@ export const getAllArticleSlugs = async () => {
       }
     }
   `)
-  return data?.articles?.map(({ slug }) => {
+  return data?.articles?.map(({ slug }: { slug: string }) => {
     return {
       params: {
         slug,
@@ -178,7 +178,7 @@ export const getAllRecipeSlugs = async () => {
       }
     }
   `)
-  return data?.recipes?.map(({ slug }) => {
+  return data?.recipes?.map(({ slug }: { slug: string }) => {
     return {
       params: {
         slug,
@@ -261,7 +261,7 @@ export const getAllPageSlugs = async () => {
       }
     }
   `)
-  return data?.pages?.map(({ slug }) => {
+  return data?.pages?.map(({ slug }: { slug: string }) => {
     return {
       params: {
         slug,
@@ -312,7 +312,7 @@ export const getAllTagSlugs = async () => {
       }
     }
   `)
-  return data?.tags?.map(({ slug }) => {
+  return data?.tags?.map(({ slug }: { slug: string }) => {
     return {
       params: {
         slug,
@@ -374,7 +374,7 @@ export const getAllRecipeCategorySlugs = async () => {
       }
     }
   `)
-  return data?.recipeCategories?.map(({ slug }) => {
+  return data?.recipeCategories?.map(({ slug }: { slug: string }) => {
     return {
       params: {
         slug,
@@ -442,7 +442,7 @@ export const getRecipeCategoryBySlug = async (slug: string) => {
   return recipeCategory
 }
 
-export const getAllPostsForHome = async preview => {
+export const getAllPostsForHome = async (preview: boolean) => {
   const data = await fetchAPI(
     `
     query Posts($where: JSON){
@@ -478,7 +478,7 @@ export const getAllPostsForHome = async preview => {
   return [data?.pages, data?.articles, data?.recipes]
 }
 
-export const getAllArticles = async preview => {
+export const getAllArticles = async (preview: boolean) => {
   const data = await fetchAPI(
     `
     query Posts($where: JSON){
@@ -502,7 +502,7 @@ export const getAllArticles = async preview => {
   return data?.articles
 }
 
-export const getAllRecipes = async preview => {
+export const getAllRecipes = async (preview: boolean) => {
   const data = await fetchAPI(
     `
     query Posts($where: JSON){
@@ -526,7 +526,7 @@ export const getAllRecipes = async preview => {
   return data?.recipes
 }
 
-export const getPreviewPostBySlug = async slug => {
+export const getPreviewPostBySlug = async (slug: string) => {
   const data = await fetchAPI(
     `
   query PostBySlug($where: JSON) {

@@ -40,7 +40,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   // Fetch necessary data for the article using `params.slug`
-  const postData = await getPageBySlug(params.slug as string)
+  const postData = await getPageBySlug(params?.slug as string)
   const mainMenu = await getMenuBySlug("main-navigation")
   return {
     props: {
