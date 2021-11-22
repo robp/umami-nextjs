@@ -1,6 +1,13 @@
 .list {
   list-style: none;
   padding: 0;
-  columns: 3;
-  column-gap: 2em;
+
+  @media (min-width: 30rem) {
+    columns: 2;
+    column-gap: 2em;
+  }
+
+  @media (min-width: 40rem) {
+    columns: 3;
+  }
 }
