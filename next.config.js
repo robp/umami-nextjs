@@ -1,7 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    formats: ["image/avif", "image/webp", "image/jpeg"],
+    formats: ["image/avif", "image/webp"],
     domains: [
       "localhost",
       "strapi.umami.pinciuc.com",
