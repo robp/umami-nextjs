@@ -95,8 +95,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   // Fetch necessary data for the article using `params.slug`
   const recipe = await getRecipeBySlug(params?.slug as string)
+  const external = recipe?.media_image.url.match(/:\/\//) !== null
   const { base64, img } = await getPlaiceholder(
-    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${recipe?.media_image.url}`
+    `${external ? "" : process.env.NEXT_PUBLIC_STRAPI_API_URL}${
+      recipe?.media_image.url
+    }`
   )
   const mainMenu = await getMenuBySlug("main-navigation")
 
